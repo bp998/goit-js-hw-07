@@ -11,22 +11,35 @@ galleryItems.forEach((n) => {
       class="gallery__image"
       src="${n.preview}"
       alt="${n.description}"
-      data-original="${n.original}"
+      data-source="${n.original}"
   /></a>
 </div>`;
   gallery.insertAdjacentHTML("beforeend", image);
 });
 
 gallery.addEventListener("click", (e) => {
+  e.preventDefault();
   if (e.target.nodeName !== "IMG") {
     return;
   } else {
-    const original = e.target.dataset.original;
-    console.log(original);
+    const source = e.target.dataset.source;
+    console.log(source);
     const instance = basicLightbox.create(`
-    <img src="${original}" width="800" height="600">
+    <img src="${source}" width="800" height="600">
 `);
 
     instance.show();
   }
+});
+
+const close = (e) => {
+  const visible = basicLightbox.visible();
+  if (visible === true && e.key === "Escape") {
+    basicLightbox.close();
+  }
+  gallery.addEventListener("keydown", close);
+};
+
+document.addEventListener("keydown", (event) => {
+  console.log(event.key);
 });
