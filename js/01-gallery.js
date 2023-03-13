@@ -23,23 +23,18 @@ gallery.addEventListener("click", (e) => {
     return;
   } else {
     const source = e.target.dataset.source;
-    console.log(source);
     const instance = basicLightbox.create(`
     <img src="${source}" width="800" height="600">
 `);
 
     instance.show();
-  }
-});
 
-const close = (e) => {
-  const visible = basicLightbox.visible();
-  if (visible === true && e.key === "Escape") {
-    basicLightbox.close();
+    const close = (e) => {
+      const visible = basicLightbox.visible();
+      if (visible === true && e.key === "Escape") {
+        instance.close();
+      }
+    };
+    gallery.addEventListener("keydown", close);
   }
-  gallery.addEventListener("keydown", close);
-};
-
-document.addEventListener("keydown", (event) => {
-  console.log(event.key);
 });
