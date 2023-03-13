@@ -4,9 +4,6 @@ import { galleryItems } from "./gallery-items.js";
 const gallery = document.querySelector(".gallery");
 // DATA
 
-// const ul = document.createElement("ul");
-// gallery.append(ul);
-
 galleryItems.forEach((n) => {
   const image = `<div class="gallery__item">
   <a href="${n.original}">
@@ -19,4 +16,17 @@ galleryItems.forEach((n) => {
 </div>`;
   gallery.insertAdjacentHTML("beforeend", image);
 });
-console.log(galleryItems);
+
+gallery.addEventListener("click", (e) => {
+  if (e.target.nodeName !== "IMG") {
+    return;
+  } else {
+    const original = e.target.dataset.original;
+    console.log(original);
+    const instance = basicLightbox.create(`
+    <img src="${original}" width="800" height="600">
+`);
+
+    instance.show();
+  }
+});
